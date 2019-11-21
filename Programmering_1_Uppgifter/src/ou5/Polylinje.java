@@ -15,33 +15,39 @@ public class Polylinje {
 			this.horn[i] = new Punkt(horn[i]);
 	}
 
+	//returnerar en sträng med polylinjens punkter, färg och bredd
+	@Override
 	public String toString() {
 		String s = "";
-		int i = 1;
 		for(Punkt p : horn) {
-			s = s + horn[i].toString() + " ";
-			i++;
+			s = s + " " + p;
 		}
-		s = s + farg + " " + bredd;
+		s = s + " " + farg + " " + bredd;
 		return s;
 	}
 
 	public Punkt[] getHorn() {
+		return this.horn;
 	}
 
 	public String getFarg() {
+		return this.farg;
 	}
 
 	public int getBredd() {
+		return this.bredd;
 	}
 
 	public void setFarg(String farg) {
+		this.farg = farg;
 	}
 
 	public void setBredd(int bredd) {
+		this.bredd = bredd;
 	}
 
 	public double langd() {
+		return this.horn.length;
 	}
 
 	public void laggTill(Punkt horn) {
@@ -54,8 +60,16 @@ public class Polylinje {
 	}
 
 	public void laggTillFramfor(Punkt horn, String hornNamn) {
+		Punkt[] h = new Punkt[this.horn.length + 1];
+		h[0] = horn;
+		h[0].setNamn(hornNamn);
+		for(int i = 0; i < this.horn.length; i++) {
+			h[i +1] = this.horn[i];
+		}
+		this.horn = h;
 	}
 
 	public void taBort(String hornNamn) {
+		
 	}
 }

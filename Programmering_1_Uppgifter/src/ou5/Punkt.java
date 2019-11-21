@@ -54,5 +54,9 @@ public class Punkt {
 	public void setY(int y) {
 		this.y = y;
 	}
+	
+	public void setNamn(String namn) {
+		this.namn = namn;
+	}
 }
 
