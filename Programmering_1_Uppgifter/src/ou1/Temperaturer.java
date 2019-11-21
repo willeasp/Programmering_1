@@ -1,3 +1,5 @@
+package ou1;
+
 import java.util.*; // Scanner, Locale
 
 class Temperaturer {
@@ -23,6 +25,7 @@ class Temperaturer {
 			for (int matning = 1; matning <= antalMatningarPerVecka; matning++)
 				t[vecka][matning] = in.nextDouble();
 		}
+		in.close();
 		System.out.println();
 		
 		// visa temperaturerna
