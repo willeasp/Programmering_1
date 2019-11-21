@@ -14,14 +14,14 @@ class DenKortasteVagen {
 		int stationer[] = new int[3 + 1];
 		
 		for (int i = 0; i < a.length; i++)
-			for (int j = 1; j < b[i].length; j++) {
+			for (int j = 0; j < b[i].length; j++) {
 				
 				if (a[i] + b[i][j] + c[j] < kortast) {
 					kortast = a[i] + b[i][j] + c[j];
 					//System.out.println(kortast);
 					stationer[1] = i;
 					stationer[2] = j;
-					
+					stationer[3] = 1;
 				}					
 			}
 		return stationer;		
