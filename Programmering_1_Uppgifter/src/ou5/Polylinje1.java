@@ -1,20 +1,18 @@
 package ou5;
 
-public class Polylinje {
+public class Polylinje1 {
 	private Punkt[] horn;
 	private String farg = "svart";
 	private int bredd = 1;
 
 	//skapar en helt tom polylinje med standard-färg och bredd
-	public Polylinje() {
+	public Polylinje1() {
 		this.horn = new Punkt[0];
 	}
 
-	//skapar en ny polylinje utifrån en redan existerande polylinje
-	public Polylinje(Punkt[] horn) {
-		this.horn = new Punkt[horn.length];
-		for (int i = 0; i < horn.length; i++)
-			this.horn[i] = new Punkt(horn[i]);
+	//kopierar referensen horn
+	public Polylinje1(Punkt[] horn) {
+		this.horn = horn;
 	}
 
 	//returnerar en sträng med polylinjens punkter, färg och bredd
@@ -22,18 +20,15 @@ public class Polylinje {
 	public String toString() {
 		String s = "";
 		for(Punkt p : horn) {
-			s = s + "[" + p + "] ";
+			s = s + " " + p;
 		}
 		s = s + " " + farg + " " + bredd;
 		return s;
 	}
 
-	//returnerar en ny array h med likadana punkter i polylinjen
+	//returnerar referensen till this.horn
 	public Punkt[] getHorn() {
-		Punkt[] h = new Punkt[this.horn.length];
-		for(int i = 0; i < this.horn.length; i++)
-			h[i] = new Punkt(this.horn[i]);
-		return h;			
+		return this.horn;			
 	}
 
 	//returnerar färgen på polylinjen
@@ -56,22 +51,19 @@ public class Polylinje {
 		this.bredd = bredd;
 	}
 
-	//returnerar längden på polylinjen
+	//returnerar antalet punkter
 	public double langd() {
-		double d = 0;
-		for(int i=0; i+1 < this.horn.length; i++) {
-			d = d + this.horn[i].avstand(this.horn[i+1]);
-		}
-		return d;
+		return this.horn.length;
 	}
 
-	//gör en ny array h, lägger över alla värden från this.horn, lägger till en kopia av horn
+	//gör en ny array h, lägger över alla värden från this.horn, 
+	//lägger till en kopia av referensen horn
 	public void laggTill(Punkt horn) {
 		Punkt[] h = new Punkt[this.horn.length + 1];
 		int i;
 		for (i = 0; i < this.horn.length; i++)
 			h[i] = this.horn[i];
-		h[i] = new Punkt(horn);
+		h[i] = horn;
 		this.horn = h;
 	}
 
@@ -80,14 +72,13 @@ public class Polylinje {
 	// forloop för varje p i this.horn, iterator i
 	// kollar om namnet på punkten i this.horn == hornNamn
 	// Om false: lägg till punkten i this.horn till h
-	// Om true: Lägg till en kopia av resursen horn refererar till till h, 
-	//sen lägg till punkten i this.horn till h	
+	// Om true: Lägg till en kopia av referensen horn till h sen punkten i this.horn till h	
 	public void laggTillFramfor(Punkt horn, String hornNamn) {
 		Punkt[] h = new Punkt[this.horn.length + 1];
 		int i = 0;
 		for(Punkt p : this.horn) {
 			if(hornNamn == p.namn) {
-				h[i] = new Punkt(horn);
+				h[i] = horn;
 				i++;
 				h[i] = p;
 			}
@@ -119,7 +110,5 @@ public class Polylinje {
 		this.horn = h;
 	}
 	
-	
-}
 
-//kuken
+}
