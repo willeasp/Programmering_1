@@ -46,6 +46,15 @@ public class PolylinjeTest {
 		//TODO Skapa en kopia av polylinjen du har
 		Polylinje poly2 = new Polylinje (poly.getHorn());
 		System.out.println("poly2: " + poly2.toString());
+		
+		
+		//TODO PolylinjeIterator
+		Polylinje.PolylinjeIterator polyIt = poly.new PolylinjeIterator();
+		System.out.println("\n\nPolylinjeIterator: ");
+		while(polyIt.finnsHorn()) {
+			System.out.println("Hörn: " + polyIt.horn() + ", gå fram");
+			polyIt.gaFram();
+		}
 	}
 
 }

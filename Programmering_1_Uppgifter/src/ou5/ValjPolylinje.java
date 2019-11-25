@@ -37,21 +37,26 @@ public class ValjPolylinje {
 		// bestäm den kortaste av de polylinjer som är gula
 		double kortast = 1000000000000000.0;
 		Polylinje kortaste_gula = null;
-		int raknare = 0;
+		// int raknare = 0;
+		// om färgen inte är gul, börja om loopen
+		// om längden på den gula polylinjen är kortare än den tidigare, 
+		// sätter man det värdet i kortast, och kopierar referensen till kortaste gula.	
 		for(Polylinje p : polylinjer) {
-			if(p.getFarg() != "Gul") {	
-				continue;
+			if(p.getFarg().equals("Gul")) {	
+				if (p.langd() < kortast) {
+					kortast = p.langd();
+					kortaste_gula = p;
+				}
 			}				
-			else if (p.langd() < kortast) {
-				kortast = p.langd();
-				kortaste_gula = p;
-			}	
-			raknare++;
 		}
 			
 
 		// visa den valda polylinjen
-		System.out.println("\nKortaste gula polylinjen: " + raknare + " " + kortaste_gula.toString());
+		if(kortaste_gula == null) {
+			System.out.println("Det fanns ingen gul polylinje.");
+		}
+		else
+			System.out.println("\nKortaste gula polylinjen: " + " " + kortaste_gula.toString());
 		
 	}
 
@@ -80,12 +85,12 @@ public class ValjPolylinje {
 		Punkt valdPunkt = null;
 		char valtChar = 0;
 		while (antalValdaHorn < antalHorn) {
-			valdPunkt = slumpPunkt();
-			valtChar = valdPunkt.namn.charAt(0);
+			valdPunkt = slumpPunkt();	// skapar en slumpmässig punkt i valdPunkt
+			valtChar = valdPunkt.namn.charAt(0);	// Hämtar namnet på punkten som en character
 			int c = valtChar - 65;	//c får teckenvärdet som c har
-			if(valdaNamn[c] == true)	//om det tecknet har använts innan, börja om
+			if(valdaNamn[c] == true)	//om det tecknet har använts innan, hoppa till början på loopen
 				continue;
-			else {		//lägg till den valda punkten i polylinjen, sätt att namnet redan använts, räkna upp
+			else {		//lägg till den valda punkten i polylinjen, sätt att namnet använts, räkna upp
 				polylinje.laggTill(valdPunkt);	
 				valdaNamn[c] = true;
 				antalValdaHorn++;
@@ -94,7 +99,7 @@ public class ValjPolylinje {
 		
 		
 		// sätt färg
-		int f = rand.nextInt(3);
+		int f = rand.nextInt(3); // en slumpmässig siffra mellan 0 och 2
 		switch(f) {
 		case 0:
 			polylinje.setFarg("Gul");
