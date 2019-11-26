@@ -1,6 +1,13 @@
 package eu1;
 
 public class min {
+	public static void main(String[] args) {
+		int[] s = {5, 8, 3, 4, 9, 35, 23, 54, 65, 34, 76, 45, 76, 45, 34, 7, 1, 12, 38};
+		int i = min(s);
+		System.out.println(i);
+	}
+	
+	
 	// min returnerar det minsta elementet i en sekventiell samling.
 	// Om samlingen är tom, kastas ett undantag av typen IllegalArgumentException.
 	public static int min(int[] element) throws IllegalArgumentException {
@@ -16,16 +23,17 @@ public class min {
 		int[] delsekvens = new int[antaletTankbaraElement];
 		int i = 0;
 		int j = 0;
-		while (sekvens.length > 1) {
+		while (antaletPar > 0) {
 			// skilj ur en delsekvens med de tänkbara elementen
 			i = 0;
 			j = 0;
 			while (j < antaletPar) {
-				delsekvens[j++] = (sekvens[i] < sekvens[i + 1]) ? sekvens[i] : sekvens[i + 1];
+				delsekvens[j++] = (sekvens[i] < sekvens[i + 1]) ? 
+						sekvens[i] : sekvens[i + 1];
 				i += 2;
 			}
 			if (antaletOparadeElement == 1)
-				delsekvens[j] = sekvens[sekvens.length - 1];
+				delsekvens[j] = sekvens[i];
 			
 			// utgå nu ifrån delsekvensen
 			sekvens = delsekvens;
@@ -33,7 +41,7 @@ public class min {
 			antaletOparadeElement = antaletTankbaraElement % 2;
 			antaletTankbaraElement = antaletPar + antaletOparadeElement;
 			// spårutskrift 1 – för att följa sekvensen
-			// System.out.println (java.util.Arrays.toString (sekvens));
+			System.out.println (java.util.Arrays.toString (sekvens) + " " + antaletTankbaraElement);
 			// spårutskrift 2 - för att avsluta loopen i förväg
 			// (för att kunna se vad som händer i början)
 			// if (antalVarv++ == 10)
