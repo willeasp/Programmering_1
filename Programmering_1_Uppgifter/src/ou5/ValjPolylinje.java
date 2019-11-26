@@ -86,7 +86,7 @@ public class ValjPolylinje {
 		char valtChar = 0;
 		while (antalValdaHorn < antalHorn) {
 			valdPunkt = slumpPunkt();	// skapar en slumpmässig punkt i valdPunkt
-			valtChar = valdPunkt.namn.charAt(0);	// Hämtar namnet på punkten som en character
+			valtChar = valdPunkt.getNamn().charAt(0);	// Hämtar namnet på punkten som en character
 			int c = valtChar - 65;	//c får teckenvärdet som c har
 			if(valdaNamn[c] == true)	//om det tecknet har använts innan, hoppa till början på loopen
 				continue;

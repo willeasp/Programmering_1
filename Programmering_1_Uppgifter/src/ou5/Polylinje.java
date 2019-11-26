@@ -86,7 +86,7 @@ public class Polylinje {
 		Punkt[] h = new Punkt[this.horn.length + 1];
 		int i = 0;
 		for(Punkt p : this.horn) {
-			if(hornNamn == p.namn) {
+			if(hornNamn == p.getNamn()) {
 				h[i] = new Punkt(horn);
 				i++;
 				h[i] = p;
@@ -109,7 +109,7 @@ public class Polylinje {
 		Punkt[] h = new Punkt[this.horn.length - 1];
 		int i = 0;
 		for(Punkt p : this.horn) {
-			if(hornNamn == p.namn) {
+			if(hornNamn == p.getNamn()) {
 				continue;
 			}
 			else

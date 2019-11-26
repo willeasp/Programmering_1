@@ -1,9 +1,9 @@
 package ou5;
 
-public class Punkt {
-	int x;
-	int y;
-	String namn;
+class Punkt {
+	private int x;
+	private int y;
+	private String namn;
 	
 	public Punkt (String namn, int x, int y) {
 		this.namn = namn;
