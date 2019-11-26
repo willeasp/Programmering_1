@@ -35,7 +35,7 @@ public class ValjPolylinje {
 		
 		
 		// bestäm den kortaste av de polylinjer som är gula
-		double kortast = 1000000000000000.0;
+		double kortast = Double.POSITIVE_INFINITY;
 		Polylinje kortaste_gula = null;
 		// int raknare = 0;
 		// om färgen inte är gul, börja om loopen

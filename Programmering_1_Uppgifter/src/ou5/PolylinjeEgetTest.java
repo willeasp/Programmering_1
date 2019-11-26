@@ -9,6 +9,8 @@ public class PolylinjeEgetTest {
 		Punkt a = new Punkt("a", 3, 5);
 		p.laggTill(a);
 		System.out.println(p.toString());
+		p.laggTillFramfor(new Punkt("U", 6, 7), "a");
+		System.out.println(p.toString());
 	}
 
 }

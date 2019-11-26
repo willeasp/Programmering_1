@@ -40,12 +40,14 @@ class Punkt {
 		return d;
 	}
 	
+	/*
 	public boolean equals (Punkt that) {
 		if(that.x == this.x & that.y == this.y)
 			return true;
 		else 
 			return false;
 	}
+	*/
 	
 	public void setX(int x) {
 		this.x = x;
