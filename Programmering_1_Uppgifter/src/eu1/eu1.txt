@@ -1,0 +1,49 @@
+sekvens: 5, 8, 3, 4, 9, 35, 23, 54, 65, 34, 76, 45, 76, 45, 34, 7, 1, 12, 38
+
+antaletPar : 19/2 = 9
+Oparade = 1
+tänkbara: 10
+delsekvens = int [10]
+
+while antaletpar > 0
+delsekvens = 5, 3, 9, 23, 34, 45, 45, 7, 1, 38
+sekvens = 5, 3, 9, 23, 34, 45, 45, 7, 1, 38
+antaletpar = 5
+Oparade = 0
+tänkbara = 5
+
+delsekvens = 3, 9, 34, 7, 1
+sekvens = 3, 9, 34, 7, 1, 45, 45, 7, 1, 38
+antaletpar = 2
+oparade = 1
+tänkbara = 3
+
+delsekvens = 3, 7, 38
+sekvens = 3, 7, 38, 7, 1, 45, 45, 7, 1, 38
+antaletpar = 1
+oparade = 1 at 
+tänkbara = 2
+
+delsekvens = 3, 38
+sekvens = 3, 38, 38, 7, 1, 45, 45, 7, 1, 38
+antaletpar = 1
+oparade = 0
+tänkbara = 1
+
+delsekvens = 3
+sekvens = 3, 38, 38, 7, 1, 45, 45, 7, 1, 38
+antaletpar = 0
+oparade = 1
+tänkbara = 1
+
+nu är whileloopen slut för att antaletpar inte är större än 0
+
+lösningen ligger i när man tar det sista oparade elementet
+if (antaletOparadeElement == 1)
+				delsekvens[j] = sekvens[sekvens.length - 1];
+
+sekvens.length hämtar elementet längst bak i sekvensen, vilket alltid är samma för 
+att längden på sekvensen aldrig ändras. Lösningen på problemet är att ta elementet
+på platsen i efter att alla par jämförts.:
+if (antaletOparadeElement == 1)
+				delsekvens[j] = sekvens[i];
