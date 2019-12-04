@@ -36,14 +36,14 @@ public class Chessboard {
 		}
 
 		/**
-		 * markerar de rutor som pjäsen kan gå till
+		 * markerar att pjäsen kan gå till denna rutan
 		 */
 		public void mark() {
 			this.marked = true;
 		}
 
 		/**
-		 * omarkerar alla rutpr som pjäsen kan gå till
+		 * avmarkerar att pjäsen kan gå till denna rutan
 		 */
 		public void unmark() {
 			this.marked = false;
@@ -54,7 +54,7 @@ public class Chessboard {
 		 */
 		public String toString() {
 			String s = (marked) ? "xx" : "--";
-			return (piece == null) ? s : piece.toString();
+			return (piece == null) ? s : piece.toString();			
 		}
 	}
 
@@ -86,11 +86,23 @@ public class Chessboard {
 	 */
 	public String toString() {
 		StringBuilder s = new StringBuilder();
+		s.append("  1  2  3  4  5  6  7  8\n");
+		int i = 0;
 		for(Field[] row : fields) {
+			s.append((char) (FIRST_ROW + i++) + " ");
 			for(Field field : row)
 				s.append(field.toString() + " ");
 			s.append("\n");
 		}
+		
+		/*for (int r = 0; r < NUMBER_OF_ROWS; r++) {
+			s.append((char) (FIRST_ROW + r) + " ");
+			for (int c = 0; c < NUMBER_OF_COLUMNS; c++) {
+				s.append(fields[r][c].toString() + " ");
+			}
+			s.append("\n");
+		}*/
+		
 		return s.toString();
 	}
 
@@ -174,11 +186,18 @@ public class Chessboard {
 		public abstract void unmarkReachableFields();
 	}
 
+	/**
+	 * bonde
+	 */
 	public class Pawn extends Chesspiece {
 		public Pawn(char color, char name) {
 			super(color, name);
 		}
 
+		@Override
+		/**
+		 * Markerar en ruta framåt asså
+		 */
 		public void markReachableFields() {
 			byte col = (byte) (column + 1);
 			if (Chessboard.this.isValidField(row, col)) {
@@ -188,6 +207,7 @@ public class Chessboard {
 			}
 		}
 
+		@Override
 		public void unmarkReachableFields() {
 			byte col = (byte) (column + 1);
 			if (Chessboard.this.isValidField(row, col)) {
@@ -206,12 +226,22 @@ public class Chessboard {
 
 		@Override
 		public void markReachableFields() {
-			
+			for(int r = 0; r < NUMBER_OF_ROWS; r++) {
+				fields[r][column -1].mark();
+			}
+			for(int c = 0; c < NUMBER_OF_COLUMNS; c++) {
+				fields[row - FIRST_ROW][c].mark();
+			}
 		}
 
 		@Override
 		public void unmarkReachableFields() {
-			
+			for(int r = 0; r < NUMBER_OF_ROWS; r++) {
+				fields[r][column -1].unmark();
+			}
+			for(int c = 0; c < NUMBER_OF_COLUMNS; c++) {
+				fields[row - FIRST_ROW][c].unmark();
+			}
 		}
 	}
 
@@ -240,7 +270,13 @@ public class Chessboard {
 
 		@Override
 		public void markReachableFields() {
-			
+			int rad = (int) (row - FIRST_ROW);
+			int kortast = ((int) (row - FIRST_ROW) > (int) column) ? (int) (row - FIRST_ROW) : (int) column;
+			for(int i = -kortast; ; i--) {
+				if (Chessboard.this.isValidField((char) (row - FIRST_ROW + i), (byte) (column - FIRST_COLUMN + i))) {
+				}
+				fields[(row - FIRST_ROW) - kortast][column -1 -kortast].mark();
+			}
 		}
 
 		@Override
@@ -257,12 +293,28 @@ public class Chessboard {
 
 		@Override
 		public void markReachableFields() {
+			// lodrätt vågrätt 
+			for(int r = 0; r < NUMBER_OF_ROWS; r++) {
+				fields[r][column -1].mark();
+			}
+			for(int c = 0; c < NUMBER_OF_COLUMNS; c++) {
+				fields[row - FIRST_ROW][c].mark();
+			}
 			
+			// diagonalt
 		}
 
 		@Override
 		public void unmarkReachableFields() {
-			
+			// lodrätt vågrätt
+			for (int r = 0; r < NUMBER_OF_ROWS; r++) {
+				fields[r][column - 1].unmark();
+			}
+			for (int c = 0; c < NUMBER_OF_COLUMNS; c++) {
+				fields[row - FIRST_ROW][c].unmark();
+			}
+
+			// diagonalt
 		}
 	}
 
@@ -274,12 +326,30 @@ public class Chessboard {
 
 		@Override
 		public void markReachableFields() {
-			
+			for(int i = -1; i <= 1; i++)
+				for(int j = -1; j <= 1; j++) {
+					char rowen = (char) (row + i);
+					byte col = (byte) (column + j);
+					if (Chessboard.this.isValidField(rowen, col)) {
+						int r = rowen - FIRST_ROW;
+						int c = col - FIRST_COLUMN;
+						Chessboard.this.fields[r][c].mark();
+					}
+				}
 		}
 
 		@Override
 		public void unmarkReachableFields() {
-			
+			for(int i = -1; i <= 1; i++)
+				for(int j = -1; j <= 1; j++) {
+					char rowen = (char) (row + i);
+					byte col = (byte) (column + j);
+					if (Chessboard.this.isValidField(rowen, col)) {
+						int r = rowen - FIRST_ROW;
+						int c = col - FIRST_COLUMN;
+						Chessboard.this.fields[r][c].unmark();
+					}			
+				}
 		}
 	}
 }
