@@ -93,16 +93,7 @@ public class Chessboard {
 			for(Field field : row)
 				s.append(field.toString() + " ");
 			s.append("\n");
-		}
-		
-		/*for (int r = 0; r < NUMBER_OF_ROWS; r++) {
-			s.append((char) (FIRST_ROW + r) + " ");
-			for (int c = 0; c < NUMBER_OF_COLUMNS; c++) {
-				s.append(fields[r][c].toString() + " ");
-			}
-			s.append("\n");
-		}*/
-		
+		}		
 		return s.toString();
 	}
 
@@ -119,8 +110,6 @@ public class Chessboard {
 
 	/**
 	 * Superklassen för en schackpjäs
-	 * @author wille
-	 *
 	 */
 	public abstract class Chesspiece {
 		private char color;
@@ -172,7 +161,13 @@ public class Chessboard {
 			Chessboard.this.fields[r][c].put(this);
 		}
 
+		/**
+		 * Tar bort pjäsen från spelplanen
+		 */
 		public void moveOut() {
+			Chesspiece.this.row = 0;
+			Chesspiece.this.column = -1;
+			Field.this
 		}
 
 		/**
@@ -245,6 +240,9 @@ public class Chessboard {
 		}
 	}
 
+	/**
+	 * Får bara gå två steg sen ett i vilken riktning som helst
+	 */
 	public class Knight extends Chesspiece {
 
 		protected Knight(char color, char name) {
@@ -253,15 +251,44 @@ public class Chessboard {
 
 		@Override
 		public void markReachableFields() {
-			
+			int rad = (int) (row - FIRST_ROW);
+			int col = column - 1;
+			int tva = 2;
+			int en = 1;
+			for(int i = 1; i <= 4; i++) {
+				if(Chessboard.this.isValidField((char)(row + tva) , (byte)(column + en)))
+					fields[rad + tva][col + en].mark();
+				if(Chessboard.this.isValidField((char)(row + en) , (byte)(column + tva)))
+					fields[rad + en][col + tva].mark();
+				if(i % 2 == 0)
+					en *= -1;
+				else
+					tva *= -1;					
+			}
 		}
 
 		@Override
 		public void unmarkReachableFields() {
-			
+			int rad = (int) (row - FIRST_ROW);
+			int col = column - 1;
+			int tva = 2;
+			int en = 1;
+			for(int i = 1; i <= 4; i++) {
+				if(Chessboard.this.isValidField((char)(row + tva) , (byte)(column + en)))
+					fields[rad + tva][col + en].unmark();
+				if(Chessboard.this.isValidField((char)(row + en) , (byte)(column + tva)))
+					fields[rad + en][col + tva].unmark();
+				if(i % 2 == 0)
+					en *= -1;
+				else
+					tva *= -1;					
+			}
 		}
 	}
 
+	/**
+	 * Får bara gå diagonalt hur långt som helst
+	 */
 	public class Bishop extends Chesspiece {
 
 		protected Bishop(char color, char name) {
@@ -271,20 +298,57 @@ public class Chessboard {
 		@Override
 		public void markReachableFields() {
 			int rad = (int) (row - FIRST_ROW);
-			int kortast = ((int) (row - FIRST_ROW) > (int) column) ? (int) (row - FIRST_ROW) : (int) column;
-			for(int i = -kortast; ; i--) {
-				if (Chessboard.this.isValidField((char) (row - FIRST_ROW + i), (byte) (column - FIRST_COLUMN + i))) {
-				}
-				fields[(row - FIRST_ROW) - kortast][column -1 -kortast].mark();
+			int i = 1;
+			while(Chessboard.this.isValidField((char)(row -i) , (byte)(column -i))) {
+				fields[rad -i][column -1 -i].mark();
+				i++;
+			}
+			i = 1;
+			while(Chessboard.this.isValidField((char)(row +i) , (byte)(column +i))) {
+				fields[rad +i][column -1 +i].mark();
+				i++;
+			}
+			i = 1;
+			while(Chessboard.this.isValidField((char)(row -i) , (byte)(column +i))) {
+				fields[rad -i][column -1 +i].mark();
+				i++;
+			}
+			i = 1;
+			while(Chessboard.this.isValidField((char)(row +i) , (byte)(column -i))) {
+				fields[rad +i][column -1 -i].mark();
+				i++;
 			}
 		}
 
 		@Override
 		public void unmarkReachableFields() {
-			
+			int rad = (int) (row - FIRST_ROW);
+			int i = 1;
+			while(Chessboard.this.isValidField((char)(row -i) , (byte)(column -i))) {
+				fields[rad -i][column -1 -i].unmark();
+				i++;
+			}
+			i = 1;
+			while(Chessboard.this.isValidField((char)(row +i) , (byte)(column +i))) {
+				fields[rad +i][column -1 +i].unmark();
+				i++;
+			}
+			i = 1;
+			while(Chessboard.this.isValidField((char)(row -i) , (byte)(column +i))) {
+				fields[rad -i][column -1 +i].unmark();
+				i++;
+			}
+			i = 1;
+			while(Chessboard.this.isValidField((char)(row +i) , (byte)(column -i))) {
+				fields[rad +i][column -1 -i].unmark();
+				i++;
+			}
 		}
 	}
 
+	/**
+	 * Får gå i vilken riktning som helst hur långt som helst
+	 */
 	public class Queen extends Chesspiece {
 
 		protected Queen(char color, char name) {
@@ -302,6 +366,27 @@ public class Chessboard {
 			}
 			
 			// diagonalt
+			int rad = (int) (row - FIRST_ROW);
+			int i = 1;
+			while(Chessboard.this.isValidField((char)(row -i) , (byte)(column -i))) {
+				fields[rad -i][column -1 -i].mark();
+				i++;
+			}
+			i = 1;
+			while(Chessboard.this.isValidField((char)(row +i) , (byte)(column +i))) {
+				fields[rad +i][column -1 +i].mark();
+				i++;
+			}
+			i = 1;
+			while(Chessboard.this.isValidField((char)(row -i) , (byte)(column +i))) {
+				fields[rad -i][column -1 +i].mark();
+				i++;
+			}
+			i = 1;
+			while(Chessboard.this.isValidField((char)(row +i) , (byte)(column -i))) {
+				fields[rad +i][column -1 -i].mark();
+				i++;
+			}
 		}
 
 		@Override
@@ -315,9 +400,33 @@ public class Chessboard {
 			}
 
 			// diagonalt
+			int rad = (int) (row - FIRST_ROW);
+			int i = 1;
+			while(Chessboard.this.isValidField((char)(row -i) , (byte)(column -i))) {
+				fields[rad -i][column -1 -i].unmark();
+				i++;
+			}
+			i = 1;
+			while(Chessboard.this.isValidField((char)(row +i) , (byte)(column +i))) {
+				fields[rad +i][column -1 +i].unmark();
+				i++;
+			}
+			i = 1;
+			while(Chessboard.this.isValidField((char)(row -i) , (byte)(column +i))) {
+				fields[rad -i][column -1 +i].unmark();
+				i++;
+			}
+			i = 1;
+			while(Chessboard.this.isValidField((char)(row +i) , (byte)(column -i))) {
+				fields[rad +i][column -1 -i].unmark();
+				i++;
+			}
 		}
 	}
 
+	/**
+	 * Får gå vilken riktning som helst men bara ett steg
+	 */
 	public class King extends Chesspiece {
 
 		protected King(char color, char name) {

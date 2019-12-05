@@ -14,8 +14,8 @@ public class ChessboardEgetTest {
 //		Rook r1 = chessboard.new Rook('b', 'R');
 //		r1.moveTo('e', (byte) 4); 
 //		r1.markReachableFields();
-		Bishop b1 = chessboard.new Bishop('b', 'R');
-		b1.moveTo('b', (byte) 4); 
+		Knight b1 = chessboard.new Knight('b', 'Q');
+		b1.moveTo('a', (byte) 2); 
 		b1.markReachableFields();
 		System.out.println(chessboard);
 		
