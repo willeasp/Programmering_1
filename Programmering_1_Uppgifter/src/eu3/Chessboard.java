@@ -9,8 +9,8 @@ public class Chessboard {
 		
 		/**
 		 * konstruktor för ett objekt av typen field
-		 * @param row
-		 * @param column
+		 * @param row är raden för fältet
+		 * @param column är kolumnen för fältet
 		 */
 		public Field(char row, byte column) {
 			this.row = row;
@@ -122,8 +122,6 @@ public class Chessboard {
 
 		/**
 		 * superkonstruktor för en schackpjäs
-		 * @param color
-		 * @param name
 		 */
 		protected Chesspiece(char color, char name) {
 			this.color = color;
@@ -165,9 +163,11 @@ public class Chessboard {
 		 * Tar bort pjäsen från spelplanen
 		 */
 		public void moveOut() {
+			int r = row - FIRST_ROW;
+			int c = column - FIRST_COLUMN;
+			Chessboard.this.fields[r][c].take();
 			Chesspiece.this.row = 0;
-			Chesspiece.this.column = -1;
-			Field.this
+			Chesspiece.this.column = -1;			
 		}
 
 		/**
@@ -182,7 +182,8 @@ public class Chessboard {
 	}
 
 	/**
-	 * bonde
+	 * @apiNote Bonde
+	 * Bonden kan gå ett steg framåt
 	 */
 	public class Pawn extends Chesspiece {
 		public Pawn(char color, char name) {
@@ -190,9 +191,6 @@ public class Chessboard {
 		}
 
 		@Override
-		/**
-		 * Markerar en ruta framåt asså
-		 */
 		public void markReachableFields() {
 			byte col = (byte) (column + 1);
 			if (Chessboard.this.isValidField(row, col)) {
@@ -213,8 +211,11 @@ public class Chessboard {
 		}
 	}
 
+	/**
+	 * Torn
+	 * Tornet kan gå lodrätt och vågrätt hur långt som helst
+	 */
 	public class Rook extends Chesspiece {
-
 		protected Rook(char color, char name) {
 			super(color, name);
 		}
@@ -241,14 +242,13 @@ public class Chessboard {
 	}
 
 	/**
+	 * Springare/Häst
 	 * Får bara gå två steg sen ett i vilken riktning som helst
 	 */
 	public class Knight extends Chesspiece {
-
 		protected Knight(char color, char name) {
 			super(color, name);
 		}
-
 		@Override
 		public void markReachableFields() {
 			int rad = (int) (row - FIRST_ROW);
@@ -266,7 +266,6 @@ public class Chessboard {
 					tva *= -1;					
 			}
 		}
-
 		@Override
 		public void unmarkReachableFields() {
 			int rad = (int) (row - FIRST_ROW);
@@ -287,14 +286,13 @@ public class Chessboard {
 	}
 
 	/**
+	 * Löpare
 	 * Får bara gå diagonalt hur långt som helst
 	 */
 	public class Bishop extends Chesspiece {
-
 		protected Bishop(char color, char name) {
 			super(color, name);
 		}
-
 		@Override
 		public void markReachableFields() {
 			int rad = (int) (row - FIRST_ROW);
@@ -319,7 +317,6 @@ public class Chessboard {
 				i++;
 			}
 		}
-
 		@Override
 		public void unmarkReachableFields() {
 			int rad = (int) (row - FIRST_ROW);
@@ -347,14 +344,13 @@ public class Chessboard {
 	}
 
 	/**
+	 * Drottning
 	 * Får gå i vilken riktning som helst hur långt som helst
 	 */
 	public class Queen extends Chesspiece {
-
 		protected Queen(char color, char name) {
 			super(color, name);
 		}
-
 		@Override
 		public void markReachableFields() {
 			// lodrätt vågrätt 
@@ -363,8 +359,7 @@ public class Chessboard {
 			}
 			for(int c = 0; c < NUMBER_OF_COLUMNS; c++) {
 				fields[row - FIRST_ROW][c].mark();
-			}
-			
+			}			
 			// diagonalt
 			int rad = (int) (row - FIRST_ROW);
 			int i = 1;
@@ -388,7 +383,6 @@ public class Chessboard {
 				i++;
 			}
 		}
-
 		@Override
 		public void unmarkReachableFields() {
 			// lodrätt vågrätt
@@ -398,7 +392,6 @@ public class Chessboard {
 			for (int c = 0; c < NUMBER_OF_COLUMNS; c++) {
 				fields[row - FIRST_ROW][c].unmark();
 			}
-
 			// diagonalt
 			int rad = (int) (row - FIRST_ROW);
 			int i = 1;
@@ -425,6 +418,7 @@ public class Chessboard {
 	}
 
 	/**
+	 * Kung
 	 * Får gå vilken riktning som helst men bara ett steg
 	 */
 	public class King extends Chesspiece {
@@ -432,7 +426,6 @@ public class Chessboard {
 		protected King(char color, char name) {
 			super(color, name);
 		}
-
 		@Override
 		public void markReachableFields() {
 			for(int i = -1; i <= 1; i++)
@@ -446,7 +439,6 @@ public class Chessboard {
 					}
 				}
 		}
-
 		@Override
 		public void unmarkReachableFields() {
 			for(int i = -1; i <= 1; i++)
