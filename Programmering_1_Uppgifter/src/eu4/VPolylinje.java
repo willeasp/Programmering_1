@@ -145,4 +145,5 @@ public class VPolylinje implements Polylinje{
 		Iterator<Punkt> it = new VPolylinjeIterator();
 		return it;
 	}
+	
 }

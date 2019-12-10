@@ -13,6 +13,10 @@ public class NPolylinje implements Polylinje {
 			this.horn = horn;
 			nastaNod = null;
 		}
+		
+		public String toString() {
+			return " Punkt: " + this.horn.toString() + " Nästa nod: " + this.nastaNod.horn.toString();
+		}
 	}
 
 	private Nod horn;
@@ -35,6 +39,18 @@ public class NPolylinje implements Polylinje {
 		}
 	}
 	// ytterligare kod här
+	
+	//returnerar en sträng med polylinjens punkter, färg och bredd
+	@Override
+	public String toString() {
+		String s = "";
+		for (Punkt p : this) {
+			s = s + "[" + p + "] ";
+		}
+		s = s + " " + farg + " " + bredd;
+		return s;
+	}
+		
 	class NPolylinjeIterator implements Iterator<Punkt>{
 		Nod nod = horn;
 		
@@ -56,7 +72,6 @@ public class NPolylinje implements Polylinje {
 		return it;
 	}
 	
-
 	@Override
 	public Punkt[] getHorn() {
 		int counter = 0;
@@ -112,21 +127,26 @@ public class NPolylinje implements Polylinje {
 
 	@Override
 	public void laggTillFramfor(Punkt horn, String hornNamn) {
-		Nod nod = this.horn;
-		while(!nod.nastaNod.horn.getNamn().equals(hornNamn)) {
+		Nod nod = new Nod(new Punkt("Temporary Node", -1, -1));
+		nod.nastaNod = this.horn;
+		while(!(nod.nastaNod.horn.getNamn().equals(hornNamn))) {
+			System.out.println("Inne i while-loop. " + nod.nastaNod.horn.getNamn());
 			nod = nod.nastaNod;
 		}
+		System.out.println("Nästa nod stämmer överens med hornNamn: " + (boolean) (nod.nastaNod.horn.getNamn().equals(hornNamn)));
+		System.out.println("Nuvarande hörn: " + nod.horn);
 		Nod newNod = new Nod(horn);
-		Nod helperNod = nod.nastaNod;
-		helperNod = newNod;
-		nod = nod.nastaNod;
-		newNod.nastaNod = nod;
+		newNod.nastaNod = nod.nastaNod;
+		nod.nastaNod = newNod;
 	}
 
 	@Override
 	public void taBort(String hornNamn) {
-		// TODO Auto-generated method stub
-		
+		Nod nod = this.horn;
+		while(!(nod.nastaNod.horn.getNamn().equals(hornNamn))) {
+			nod = nod.nastaNod;
+		}
+		nod.nastaNod = nod.nastaNod.nastaNod;
 	}
 
 	
