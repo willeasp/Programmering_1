@@ -12,7 +12,8 @@ public class NPolylinjeTest {
 
 	public static void main(String[] args) {
 		Punkt[] horn = new Punkt[5];
-		for(int i = 0; i < horn.length; i++)
+		horn[0] = new Punkt("greger", 4, 5);
+		for(int i = 1; i < horn.length; i++)
 			horn[i] = ValjPolylinje.slumpPunkt();
 		System.out.println(Arrays.deepToString(horn));
 		NPolylinje np = new NPolylinje(horn);
@@ -28,6 +29,7 @@ public class NPolylinjeTest {
 		System.out.println(np.langd());
 		np.laggTill(new Punkt(ValjPolylinje.slumpPunkt()));
 		System.out.println(Arrays.deepToString(np.getHorn()));
+		np.laggTillFramfor(new Punkt(ValjPolylinje.slumpPunkt()), "greger");
 	}
 
 }
