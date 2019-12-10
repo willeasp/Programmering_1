@@ -166,8 +166,10 @@ public class Chessboard {
 			int r = row - FIRST_ROW;
 			int c = column - FIRST_COLUMN;
 			Chessboard.this.fields[r][c].take();
+			Chessboard.this.fields[row - FIRST_ROW][column - FIRST_COLUMN].piece = null;
 			Chesspiece.this.row = 0;
 			Chesspiece.this.column = -1;			
+			Chesspiece.this.column = -1;
 		}
 
 		/**

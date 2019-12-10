@@ -1,6 +1,6 @@
 package ou5;
 
-class Punkt {
+public class Punkt {
 	private int x;
 	private int y;
 	private String namn;
