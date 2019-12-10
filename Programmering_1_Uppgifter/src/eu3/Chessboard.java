@@ -165,9 +165,10 @@ public class Chessboard {
 		 * Tar bort pjäsen från spelplanen
 		 */
 		public void moveOut() {
+			Chessboard.this.fields[row - FIRST_ROW][column - FIRST_COLUMN].piece = null;
 			Chesspiece.this.row = 0;
 			Chesspiece.this.column = -1;
-			Field.this
+			
 		}
 
 		/**

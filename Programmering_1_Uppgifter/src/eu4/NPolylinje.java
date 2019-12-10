@@ -39,12 +39,12 @@ public class NPolylinje implements Polylinje {
 
 		@Override
 		public boolean hasNext() {
-			return  != null;
+			return horn.nastaNod != null;
 		}
 
 		@Override
 		public Punkt next() {
-			return null;
+			return horn.nastaNod.horn;
 		}
 
 	}

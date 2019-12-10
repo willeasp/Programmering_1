@@ -12,6 +12,7 @@ public class NPolylinjeTest {
 		Punkt[] horn = new Punkt[5];
 		for(int i = 0; i < horn.length; i++)
 			horn[i] = ValjPolylinje.slumpPunkt();
+		System.out.println(Arrays.deepToString(horn));
 		NPolylinje np = new NPolylinje(horn);
 		for(Punkt p : np)
 			System.out.println(p);
